@@ -44,9 +44,9 @@ Current release level
 [![GitHub release](https://img.shields.io/github/v/release/usbarmory/tamago-go)](https://github.com/usbarmory/tamago-go/tree/latest) [![Build Status](https://github.com/usbarmory/tamago-go/workflows/Build%20Go%20compiler/badge.svg)](https://github.com/usbarmory/tamago-go/actions)
 
 The current release for the [TamaGo modified Go distribution](https://github.com/usbarmory/tamago-go) is
-[tamago1.19](https://github.com/usbarmory/tamago-go/tree/tamago1.19),
-which [adds](https://github.com/golang/go/compare/go1.19...usbarmory:tamago1.19)
-`GOOS=tamago` support to go1.19.
+[tamago1.19.4](https://github.com/usbarmory/tamago-go/tree/tamago1.19.4),
+which [adds](https://github.com/golang/go/compare/go1.19.4...usbarmory:tamago1.19.4)
+`GOOS=tamago` support to go1.19.4.
 
 Binary releases for amd64 and armv7l Linux hosts [are available](https://github.com/usbarmory/tamago-go/releases/latest).
 
@@ -66,14 +66,14 @@ Supported ARM hardware
 The following table summarizes currently supported ARM SoCs and boards
 (`GOOS=tamago GOARCH=arm`).
 
-| SoC          | Board                                                                                                                                                                                | SoC package                                                            | Board package                                                                    |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| NXP i.MX6ULZ | [USB armory Mk II](https://github.com/usbarmory/usbarmory/wiki)                                                                                                                      | [imx6](https://github.com/usbarmory/tamago/tree/master/soc/imx6)       | [usbarmory/mk2](https://github.com/usbarmory/tamago/tree/master/board/usbarmory) |
-| NXP i.MX6ULL | [MCIMX6ULL-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-6ull-and-6ulz-applications-processor:MCIMX6ULL-EVK) | [imx6](https://github.com/usbarmory/tamago/tree/master/soc/imx6)       | [mx6ullevk](https://github.com/usbarmory/tamago/tree/master/board/nxp/mx6ullevk) |
-| BCM2835      | [Raspberry Pi Zero](https://www.raspberrypi.org/products/raspberry-pi-zero)                                                                                                          | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835) | [pi/pizero](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)   |
-| BCM2835      | [Raspberry Pi 1 Model A+](https://www.raspberrypi.org/products/raspberry-pi-1-model-a-plus/)                                                                                         | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835) | [pi/pi1](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)      |
-| BCM2835      | [Raspberry Pi 1 Model B+](https://www.raspberrypi.org/products/raspberry-pi-1-model-b-plus/)                                                                                         | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835) | [pi/pi1](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)      |
-| BCM2836      | [Raspberry Pi 2 Model B](https://www.raspberrypi.org/products/raspberry-pi-2-model-b)                                                                                                | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835) | [pi/pi2](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)      |
+| SoC          | Board                                                                                                                                                                                | SoC package                                                              | Board package                                                                    |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| NXP i.MX6ULZ | [USB armory Mk II](https://github.com/usbarmory/usbarmory/wiki)                                                                                                                      | [imx6ul](https://github.com/usbarmory/tamago/tree/master/soc/nxp/imx6ul) | [usbarmory/mk2](https://github.com/usbarmory/tamago/tree/master/board/usbarmory) |
+| NXP i.MX6ULL | [MCIMX6ULL-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-6ull-and-6ulz-applications-processor:MCIMX6ULL-EVK) | [imx6ul](https://github.com/usbarmory/tamago/tree/master/soc/nxp/imx6ul) | [mx6ullevk](https://github.com/usbarmory/tamago/tree/master/board/nxp/mx6ullevk) |
+| BCM2835      | [Raspberry Pi Zero](https://www.raspberrypi.org/products/raspberry-pi-zero)                                                                                                          | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835)   | [pi/pizero](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)   |
+| BCM2835      | [Raspberry Pi 1 Model A+](https://www.raspberrypi.org/products/raspberry-pi-1-model-a-plus/)                                                                                         | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835)   | [pi/pi1](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)      |
+| BCM2835      | [Raspberry Pi 1 Model B+](https://www.raspberrypi.org/products/raspberry-pi-1-model-b-plus/)                                                                                         | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835)   | [pi/pi1](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)      |
+| BCM2836      | [Raspberry Pi 2 Model B](https://www.raspberrypi.org/products/raspberry-pi-2-model-b)                                                                                                | [bcm2835](https://github.com/usbarmory/tamago/tree/master/soc/bcm2835)   | [pi/pi2](https://github.com/usbarmory/tamago/tree/master/board/raspberrypi)      |
 
 Supported RISC-V hardware 
 ==========================
@@ -81,9 +81,9 @@ Supported RISC-V hardware
 The following table summarizes currently supported RISC-V SoCs and boards
 (`GOOS=tamago GOARCH=riscv64`).
 
-| SoC          | Board                                                                        | SoC package                                                        | Board package                                                                        |
-|--------------|------------------------------------------------------------------------------|--------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| SiFive FU540 | [QEMU sifive_u](https://www.qemu.org/docs/master/system/riscv/sifive_u.html) | [fu540](https://github.com/usbarmory/tamago/tree/master/soc/fu540) | [qemu/sifive_u](https://github.com/usbarmory/tamago/tree/master/board/qemu/sifive_u) |
+| SoC          | Board                                                                        | SoC package                                                               | Board package                                                                        |
+|--------------|------------------------------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| SiFive FU540 | [QEMU sifive_u](https://www.qemu.org/docs/master/system/riscv/sifive_u.html) | [fu540](https://github.com/usbarmory/tamago/tree/master/soc/sifive/fu540) | [qemu/sifive_u](https://github.com/usbarmory/tamago/tree/master/board/qemu/sifive_u) |
 
 Compiling
 =========
@@ -156,6 +156,7 @@ External drivers using TamaGo
 =============================
 
 * [imx-usbnet](https://github.com/usbarmory/imx-usbnet) - i.MX Ethernet over USB driver
+* [imx-enet](https://github.com/usbarmory/imx-enet) - i.MX Ethernet driver
 
 Additional resources
 ====================

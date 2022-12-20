@@ -15,10 +15,10 @@ package sifive_u
 import (
 	_ "unsafe"
 
-	"github.com/usbarmory/tamago/soc/fu540"
+	"github.com/usbarmory/tamago/soc/sifive/fu540"
 )
 
 //go:linkname printk runtime.printk
 func printk(c byte) {
-	fu540.UART1.Tx(c)
+	fu540.UART0.Tx(c)
 }
