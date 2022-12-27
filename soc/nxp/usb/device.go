@@ -69,32 +69,42 @@ func (hw *USB) Start(dev *Device) {
 
 			// perform controller reset procedure
 			hw.Reset()
+			log.Println("RESET DONE")
 		}
 
 		// wait for a setup packet
 		if !reg.WaitFor(10*time.Millisecond, hw.setup, 0, 1, 1) {
+			log.Println("Waiting for setup...")
 			continue
 		}
 
 		// handle setup packet
-		if err := hw.handleSetup(dev, hw.getSetup()); err != nil {
+		s := hw.getSetup()
+		log.Println("RETURNED from hw.getSetup")
+		if err := hw.handleSetup(dev, s); err != nil {
 			log.Printf("usb: setup error, %v", err)
 		}
+		log.Println("RETURNED from hw.handleSetup")
 
 		// check if configuration reload is required
 		if dev.ConfigurationValue == conf {
+			log.Println("Config reload required")
 			continue
 		} else {
+			// Host has chosen a configuration from dev.Configurations
+			// Save choice to start endpoints from this config
 			conf = dev.ConfigurationValue
 		}
 
 		// stop configuration endpoints
 		if hw.done != nil {
+			log.Println("CLOSING hw.done")
 			close(hw.done)
 			wg.Wait()
 		}
-
 		// start configuration endpoints
+		log.Println("STARTING ENDPOINTS")
 		hw.startEndpoints(&wg, dev, conf)
+		log.Println("RETURNED from startEndpoints")
 	}
 }

@@ -13,6 +13,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"log"
+	"strconv"
+	"time"
 
 	"github.com/usbarmory/tamago/bits"
 	"github.com/usbarmory/tamago/dma"
@@ -259,10 +262,15 @@ func checkDTD(n int, dir int, dtds []*dTD, done chan bool) (size int, err error)
 
 		// Wait indefinitely for active bit to be cleared.
 		if n == 0 {
+			log.Println("Waiting for inactive...")
+			reg.WaitFor(time.Second, token, TOKEN_ACTIVE, 1, 0)
+			log.Println("timed out")
+			log.Println(strconv.FormatUint(uint64(reg.Read(token)), 2))
 			reg.Wait(token, TOKEN_ACTIVE, 1, 0)
 		} else {
 			reg.WaitSignal(done, token, TOKEN_ACTIVE, 1, 0)
 		}
+		log.Println("Active bit = 0")
 
 		dtdToken := reg.Read(token)
 
@@ -288,6 +296,7 @@ func checkDTD(n int, dir int, dtds []*dTD, done chan bool) (size int, err error)
 // transfer initates a transfer using transfer descriptors (dTDs) as described in
 // p3810, 56.4.6.6.3 Executing A Transfer Descriptor, IMX6ULLRM.
 func (hw *USB) transfer(n int, dir int, ioc bool, buf []byte) (out []byte, err error) {
+	log.Printf("Entered transfer for EP: %d", n)
 	var dtds []*dTD
 	var prev *dTD
 	var i int
@@ -342,18 +351,27 @@ func (hw *USB) transfer(n int, dir int, ioc bool, buf []byte) (out []byte, err e
 		i += dtdLength
 	}
 
+	log.Println("Waiting for priming completion...")
 	// wait for priming completion
 	reg.Wait(hw.prime, pos, 1, 0)
+	log.Println("done.")
 
+	log.Println("Waiting for completion...")
 	// wait for completion
 	if n == 0 {
-		reg.Wait(hw.complete, pos, 1, 1)
+		complete := reg.WaitFor(20*time.Millisecond, hw.complete, pos, 1, 1)
+		if !complete {
+			log.Println("timedout")
+			err = fmt.Errorf("transfer completion timed out")
+		}
 	} else {
 		reg.WaitSignal(hw.done, hw.complete, pos, 1, 1)
 	}
+	log.Println("done.")
 
 	// clear completion
 	reg.Write(hw.complete, 1<<pos)
+	log.Println("Completion cleared")
 
 	size, err := checkDTD(n, dir, dtds, hw.done)
 
@@ -373,6 +391,7 @@ func (hw *USB) ack(n int) (err error) {
 
 // tx transmits a data buffer to the host through an IN endpoint
 func (hw *USB) tx(n int, ioc bool, in []byte) (err error) {
+	log.Printf("Entered tx for EP%d", n)
 	_, err = hw.transfer(n, IN, ioc, in)
 
 	// p3803, 56.4.6.4.2.3 Status Phase, IMX6ULLRM

@@ -10,6 +10,7 @@
 package usb
 
 import (
+	"encoding/hex"
 	"log"
 	"runtime"
 	"sync"
@@ -62,10 +63,9 @@ func (ep *Endpoint) Start() {
 	}()
 
 	ep.Init()
-
 	for {
 		runtime.Gosched()
-
+		log.Printf("\nep: %d\ndir: %d\nbuf: %s\n", ep.n, ep.dir, hex.EncodeToString(buf))
 		if ep.dir == OUT {
 			buf, err = ep.bus.rx(ep.n, false, res)
 
@@ -116,6 +116,7 @@ func (hw *USB) startEndpoints(wg *sync.WaitGroup, dev *Device, configurationValu
 				wg.Add(1)
 
 				go func(ep *Endpoint) {
+					log.Printf("Starting EP%d", ep.desc.Number())
 					ep.Start()
 				}(ep)
 			}
